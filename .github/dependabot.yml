@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: 'npm'
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: '/'
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: 'daily'
+      # Check for npm updates at 7am UTC
+      time: '07:00'
+    target-branch: 'dev'
+    commit-message:
+      prefix: '[DEP] npm prod'
+      prefix-development: '[DEP] npm dev'
+      include: 'scope'
