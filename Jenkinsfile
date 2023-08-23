@@ -17,6 +17,9 @@ pipeline{
 
     stages{
         stage('Check Expo Installation'){
+            environment {
+                EAS_TOKEN = credentials('ExpoToken')
+            }
             steps {
                 script{
                         // Check node version
@@ -24,11 +27,9 @@ pipeline{
                         // Install dependencies
                         sh "npm install"
 
-                        // Log in to Expo
-                        withCredentials([string(credentialsId: 'ExpoToken', variable: 'ExpoToken')]) {
-                            // Use the ExpoToken to log in
-                            sh('eas login --non-interactive --username=medobills --token=$ExpoToken')
-                        }
+                        // Use the ExpoToken to log in
+                        sh("eas login --non-interactive --username=medobills --token=$ExpoToken")
+                        
                     }
                     
                 }
