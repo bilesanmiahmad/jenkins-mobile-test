@@ -28,8 +28,9 @@ pipeline{
                         sh "npm install"
 
                         echo "Loggin into EAS"
+                        echo "${EAS_TOKEN}"
                         // Use the ExpoToken to log in
-                        sh("eas login --non-interactive --username=medobills --token=$EAS_TOKEN")
+                        sh("eas login --non-interactive --username=medobills --token=${EAS_TOKEN}")
                         
                     }
                     
