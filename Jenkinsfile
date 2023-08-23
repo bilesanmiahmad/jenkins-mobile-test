@@ -29,7 +29,7 @@ pipeline{
 
                         // echo "Loggin into EAS"
                         // // Use the ExpoToken to log in
-                        sh('expo login --username=medobills --token=$EAS_TOKEN')
+                        sh('expo login --username=medobills --password=$EAS_TOKEN')
                         sh "eas whoami"
                     }
                     
