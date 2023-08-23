@@ -27,7 +27,7 @@ pipeline{
                         // Log in to Expo
                         withCredentials([string(credentialsId: 'ExpoToken', variable: 'ExpoToken')]) {
                             // Use the ExpoToken to log in
-                            sh('eas login --non-interactive --username=completefarmer --token=$ExpoToken')
+                            sh('eas login --non-interactive --username=medobills --token=$ExpoToken')
                         }
                     }
                     
