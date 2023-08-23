@@ -56,7 +56,8 @@ pipeline{
                     wget "$buildUrl"
 
                     # get build name
-                    parts=$buildUrl.split('/')
+                    echo "Getting Build name"
+                    parts=(${buildUrl//\// })
                     artifactName="${parts[-1]}"
                     echo "Retrieved file name is: $artifactName"
 
