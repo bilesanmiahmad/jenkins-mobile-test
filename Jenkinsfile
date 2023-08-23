@@ -6,6 +6,10 @@
 pipeline{
     agent any
 
+    tools {
+        nodejs "nodejs"
+    }
+
     environment {
         EXPO_CLI_HOME = "${WORKSPACE}/expo-cli"
         PATH = "${EXPO_CLI_HOME}:${PATH}"
