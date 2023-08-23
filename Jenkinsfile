@@ -57,7 +57,8 @@ pipeline{
 
                     # get build name
                     echo "Getting Build name"
-                    parts=(${buildUrl//\// })
+                    # parts=(${buildUrl//\// })
+                    IFS="/" read -ra parts <<< "$buildUrl"
                     artifactName="${parts[-1]}"
                     echo "Retrieved file name is: $artifactName"
 
