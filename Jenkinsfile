@@ -49,18 +49,18 @@ pipeline{
             steps {
                 script{
                 sh '''
-                    //Get the last android build url
+                    # Get the last android build url
                     buildUrl=$(eas build:list --json --platform=android --limit=1 --non-interactive | jq -r '.[0].artifacts.buildUrl')
 
-                    // download build
+                    # download build
                     wget "$buildUrl"
 
-                    // get build name
+                    # get build name
                     parts=$buildUrl.split('/')
                     artifactName="${parts[-1]}"
                     echo "Retrieved file name is: $artifactName"
 
-                    //check if the directory exists
+                    # check if the directory exists
                     directory_path="artifacts/dev"
                     if [ -d "$directory_path" ]; then
                         echo "Directory '$directory_path' exists"
@@ -69,10 +69,10 @@ pipeline{
                         mkdir -p "$directory_path"
                     fi
 
-                    //count number of files in the directory
+                    # count number of files in the directory
                     file_count=$(find "$directory_path" -maxdepth 1 -type f | wc -l)
 
-                    //Rename the file
+                    # Rename the file
                     version="${file_count + 1}"
                     mv "$artifactName" "artifacts/dev/agent-app-${version}.aab"
 
