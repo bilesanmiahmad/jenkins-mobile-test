@@ -57,8 +57,7 @@ pipeline{
 
                     # get build name
                     echo "Getting Build name"
-                    IFS="/" read -ra parts <<< "$buildUrl"
-                    artifactName="${parts[-1]}"
+                    artifactName=$(echo "$buildUrl" | cut -d '/' -f 6)
                     echo "Retrieved file name is: $artifactName"
 
                     # check if the directory exists
