@@ -73,7 +73,7 @@ pipeline{
                     file_count=$(find "$directory_path" -maxdepth 1 -type f | wc -l)
 
                     # Rename the file
-                    version="${file_count + 1}"
+                    version=$((file_count + 1))
                     mv "$artifactName" "artifacts/dev/agent-app-${version}.aab"
 
                     echo "AAB file is successfully saved"
