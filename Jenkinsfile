@@ -45,6 +45,35 @@ pipeline{
             }
         }
 
+        stage('SonarQube Analysis'){
+            steps {
+                withSonarQubeEnv('Sonarqube'){
+                sh "sonar-scanner \
+                    -Dsonar.projectKey=cf-agent-mobile \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=${env.SONARQUBE_URL} \
+                    -Dsonar.login=${env.AGENT_MOBILE_SONARQUBE_TOKEN} \
+                    -Dsonar.exclusions='node_modules/**, coverage/**, **/tests/**' \
+                    -Dsonar.dynamicAnalysis=reuseReports \
+                    -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+                }
+            }
+        }
+
+        stage('Quality Gateway'){
+            steps {
+                timeout(time: 1, unit: 'HOURS'){
+                    script {
+                        def qualityGate = waitForQualityGate()
+                        if (qualityGate.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qualityGate.status}"
+                        }
+                    }
+                }
+            }
+            
+        }
+
         stage('Save Build Artifact') {
             steps {
                 script{
@@ -80,7 +109,7 @@ pipeline{
                     echo "SUCCESS"
                 '''
                 }
-                office365ConnectorSend webhookUrl: "${env.TEAM_WEBHOOK}", status: 'Success', message: "Agent AAB file created and saved successfully"
+                slackSend color: "#186b03", message: "Pipeline ${env.JOB_NAME} built and saved the AAB file successfully"
 
             }
         }
