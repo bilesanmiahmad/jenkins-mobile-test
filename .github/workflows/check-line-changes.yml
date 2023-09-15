@@ -12,11 +12,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install tools
-      run: |
-        apt-get update
-        apt-get install -y cloc
-
     - name: Count code lines
       id: code-lines
       run: |
