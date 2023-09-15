@@ -5,16 +5,24 @@ on:
     branches: [main]
 
 jobs:
-  check_code_lines:
+  labeler:
     runs-on: ubuntu-latest
-
+    name: Label the PR size
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    - name: Count line changes
-      uses: djdefi/cloc-action@5
-    
-    - name: Print number of lines changed
-      run: |
-        echo "The number of lines of code changed is: ${{ steps.cloc.outputs.lines_of_code }}"
+      - uses: Gascon1/pr-size-labeler@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          xs_label: 'size/xs'
+          xs_diff: '10'
+          s_label: 'size/s'
+          s_diff: '50'
+          m_label: 'size/m'
+          m_diff: '250'
+          l_label: 'size/l'
+          l_diff: '500'
+          xl_label: 'size/xl'
+          fail_if_xl: 'false'
+          message_if_xl: >
+            This PR exceeds the recommended size of 1000 lines.
+            Please make sure you are NOT addressing multiple issues with one PR.
+            Note this PR might be rejected due to its size.
