@@ -23,7 +23,7 @@ jobs:
         PR_ID=$(jq -r ".pull_request.url" "$GITHUB_EVENT_PATH" | cut -d'/' -f7)
         CODE_LINE_CHANGES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_ID/files" | \
-          jq -r '[.[] | select(.filename | endswith(".js", ".ts", ".css", ".html", ".py", ".java"))] | 
+          jq -r '[.[] | select(.filename | endswith(".js", ".tsx", ".ts", ".css", ".html", ".py", ".java"))] | 
           map(.changes) | add')
         echo "::set-output name=code_lines_changes::$CODE_LINE_CHANGES"
 

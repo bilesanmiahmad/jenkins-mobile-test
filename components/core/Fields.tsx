@@ -41,7 +41,7 @@ export function TextInput(props: TextInputProps) {
 
   if (!formContext || !name) {
     const msg = !formContext
-      ? "TextInput must be wrapped by the FormProvider"
+      ? "TextInput must not be wrapped by the FormProvider"
       : "Name must be defined";
     console.error(msg);
     return null;
@@ -119,7 +119,7 @@ export const SelectField = React.forwardRef<SelectFieldRef, SelectFieldProps>(
 
     if (!formContext || !name) {
       const msg = !formContext
-        ? "TextInput must be wrapped by the FormProvider"
+        ? "TextInput must not be wrapped by the FormProvider"
         : "Name must be defined";
       console.error(msg);
       return null;
@@ -272,7 +272,7 @@ export const PhoneField = ({
 
   if (!formContext || !name) {
     const msg = !formContext
-      ? "TextInput must be wrapped by the FormProvider"
+      ? "TextInput must not be wrapped by the FormProvider"
       : "Name must be defined";
     console.error(msg);
     return null;
@@ -306,7 +306,7 @@ export const PhoneField = ({
         >
           <PhoneInput
             textProps={{
-              placeholder: "Phone Number",
+              placeholder: "Phone Numbers",
               placeholderTextColor: "#4F4F4F",
               value: field.value,
               onChangeText: field.onChange,
