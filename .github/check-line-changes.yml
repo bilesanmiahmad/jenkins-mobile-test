@@ -1,0 +1,33 @@
+name: Code Line Count Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check_code_lines:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install tools
+      run: |
+        apt-get update
+        apt-get install -y cloc
+
+    - name: Count code lines
+      id: code-lines
+      run: |
+        PR_ID=$(jq -r ".pull_request.url" "$GITHUB_EVENT_PATH" | cut -d'/' -f7)
+        CODE_LINES=$(curl -s -H "Authorization: token ${{ secrets.GIYHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_ID/files" | \
+          jq -r '.[] | .filename' | grep -E '\.(js|ts|css|html|py|java)$' | \
+          xargs -I {} cloc --quiet --exclude-dir=node_modules --exclude-list=.clocignore --summarize {})
+        echo "::set-output name=code_lines::$CODE_LINES"
+
+    - name: Print code lines
+      run: |
+        echo "Code Line Count:"
+        echo "${{ steps.code-lines.outputs.code_lines }}"
