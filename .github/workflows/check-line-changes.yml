@@ -12,7 +12,7 @@ jobs:
       - uses: Gascon1/pr-size-labeler@v1.3.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          l_label: 'bug'
+          l_label: 'size/l'
           l_diff: '40'
           fail_if_l: 'true'
           message_if_l: >
