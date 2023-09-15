@@ -21,13 +21,13 @@ jobs:
       id: code-lines
       run: |
         PR_ID=$(jq -r ".pull_request.url" "$GITHUB_EVENT_PATH" | cut -d'/' -f7)
-        CODE_LINES=$(curl -s -H "Authorization: token ${{ secrets.GIYHUB_TOKEN }}" \
+        CODE_LINE_CHANGES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_ID/files" | \
-          jq -r '.[] | .filename' | grep -E '\.(js|ts|css|html|py|java)$' | \
-          xargs -I {} cloc --quiet --exclude-dir=node_modules --exclude-list=.clocignore --summarize {})
-        echo "::set-output name=code_lines::$CODE_LINES"
+          jq -r '[.[] | select(.filename | endswith(".js", ".tsx", ".ts", ".css", ".html", ".py", ".java"))] | 
+          map(.changes) | add')
+        echo "::set-output name=code_lines_changes::$CODE_LINE_CHANGES"
 
     - name: Print code lines
       run: |
         echo "Code Line Count:"
-        echo "${{ steps.code-lines.outputs.code_lines }}"
+        echo "${{ steps.code-line-changes.outputs.code_line_changes }}"
