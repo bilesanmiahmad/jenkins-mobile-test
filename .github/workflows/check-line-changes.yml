@@ -7,6 +7,10 @@ on:
 jobs:
   labeler:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     name: Label the PR size
     steps:
       - uses: Gascon1/pr-size-labeler@v1.3.0
