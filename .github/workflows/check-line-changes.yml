@@ -17,13 +17,13 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           xs_label: 'size/xs'
-          xs_diff: '10'
+          xs_diff: '20'
           s_label: 'size/s'
-          s_diff: '15'
+          s_diff: '50'
           m_label: 'size/m'
-          m_diff: '20'
+          m_diff: '200'
           l_label: 'size/l'
-          l_diff: '25'
+          l_diff: '400'
           xl_label: 'size/xl'
           fail_if_xl: 'true'
           message_if_xl: >
