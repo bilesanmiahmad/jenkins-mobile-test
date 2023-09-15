@@ -1,3 +1,5 @@
+# Author: Ahmad Bilesanmi <ahmad@completefarmer.com>
+# Description: This action will be counting the number of code changes and label the PR with the size label
 name: Code Line Count Check
 
 on:
